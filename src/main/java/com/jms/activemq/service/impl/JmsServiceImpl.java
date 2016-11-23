@@ -1,5 +1,7 @@
 package com.jms.activemq.service.impl;
 
+import org.apache.log4j.Logger;
+
 import javax.annotation.Resource;
 import javax.jms.Destination;
 import javax.jms.JMSException;
@@ -14,16 +16,20 @@ import com.jms.activemq.service.JmsService;
 
 @Service
 public class JmsServiceImpl implements JmsService{
+	/**
+	* Logger for this class
+	*/
+	private static final Logger logger = Logger.getLogger(JmsServiceImpl.class);
 
 	@Resource
 	private JmsTemplate jmsTemplate;
 	
 	public void sendMessage(Destination destination, final String message) {
-		System.out.println("开始发送消息，消息内容："+message);
+		logger.info("开始发送消息，消息内容："+message);
 		jmsTemplate.send(destination, new MessageCreator() {
-			
 			public Message createMessage(Session session) throws JMSException {
-				return session.createTextMessage(message);
+				Message returnMessage = session.createTextMessage(message);
+				return returnMessage;
 			}
 		});
 	}
