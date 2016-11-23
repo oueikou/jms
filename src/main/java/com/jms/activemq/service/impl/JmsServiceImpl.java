@@ -19,7 +19,7 @@ public class JmsServiceImpl implements JmsService{
 	private JmsTemplate jmsTemplate;
 	
 	public void sendMessage(Destination destination, final String message) {
-		System.out.println("开始发送消息");
+		System.out.println("开始发送消息，消息内容："+message);
 		jmsTemplate.send(destination, new MessageCreator() {
 			
 			public Message createMessage(Session session) throws JMSException {

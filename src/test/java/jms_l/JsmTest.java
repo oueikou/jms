@@ -18,12 +18,22 @@ public class JsmTest {
 	private JmsService jmsService;
 	@Autowired
 	@Qualifier("queueDestination")
-	private Destination destination;
+	private Destination queueDestination;
+	@Autowired
+	@Qualifier("topicDestination")
+	private Destination topicDestination;
 	
 	@Test
-	public void testSendMsg(){
+	public void testSendQueueMsg(){
 		for(int i=0; i<10; i++){
-			jmsService.sendMessage(destination, "我是消息"+i);
+			jmsService.sendMessage(queueDestination, "我是queue消息"+i);
+		}
+	}
+	
+	@Test
+	public void testSendTopicMsg(){
+		for(int i=0; i<10; i++){
+			jmsService.sendMessage(topicDestination, "我是topic消息"+i);
 		}
 	}
 	

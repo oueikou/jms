@@ -25,19 +25,26 @@
 		</constructor-arg>
 	</bean>
 	<!--这个是主题目的地，一对多的 -->
-	<!-- <bean id="topicDestination" class="org.apache.activemq.command.ActiveMQTopic">
+	<bean id="topicDestination" class="org.apache.activemq.command.ActiveMQTopic">
 		<constructor-arg value="topic" />
-	</bean> -->
+	</bean>
 
 	<!-- 可以获取session的MessageListener -->
 	<bean id="consumerSessionAwareMessageListener"
 		class="com.jms.activemq.listener.ConsumerSessionAwareMessageListener" />
 	
-	<!-- 消息监听容器 -->
-	<bean id="jmsContainer"
+	<!-- 队列消息监听容器 -->
+	<bean id="jmsQueueContainer"
 		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 		<property name="connectionFactory" ref="connectionFactory" />
 		<property name="destination" ref="queueDestination" />
+		<property name="messageListener" ref="consumerSessionAwareMessageListener" />
+	</bean>
+	<!-- 主题消息监听容器 -->
+	<bean id="jmsTopicContainer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="topicDestination" />
 		<property name="messageListener" ref="consumerSessionAwareMessageListener" />
 	</bean>
 </beans>
